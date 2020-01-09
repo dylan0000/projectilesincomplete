@@ -23,33 +23,7 @@ function villain () {
         enemi.setVelocity(0, 50)
     }
 }
-controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
-    projectile()
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    game.over(false)
-})
-function projectile () {
-    projectile2 = sprites.createProjectileFromSprite(img`
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-. . . . . . . 2 2 . . . . . . . 
-`, playerawesome, 0, -100)
-}
-function Player () {
+function Player2 () {
     playerawesome = sprites.create(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -73,11 +47,37 @@ function Player () {
     controller.configureRepeatEventDefaults(0, 150)
     scene.cameraFollowSprite(playerawesome)
 }
+controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
+    projectile()
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    game.over(false)
+})
+function projectile2 () {
+    projectile = sprites.createProjectileFromSprite(img`
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+. . . . . . . 2 2 . . . . . . . 
+`, playerawesome, 0, -100)
+}
 info.onCountdownEnd(function () {
     villain()
 })
+let projectile: Sprite = null
 let playerawesome: Sprite = null
-let projectile2: Sprite = null
 let enemi: Sprite = null
 Player()
 villain()
