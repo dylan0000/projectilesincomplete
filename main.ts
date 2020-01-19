@@ -1,5 +1,4 @@
 function villain () {
-    info.startCountdown(5)
     for (let index = 0; index < 10; index++) {
         enemi = sprites.create(img`
 . . . . . . . . . . . . . . . . 
@@ -47,8 +46,17 @@ function Player2 () {
     controller.configureRepeatEventDefaults(0, 150)
     scene.cameraFollowSprite(playerawesome)
 }
-controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
-    projectile()
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    otherSprite.destroy(effects.disintegrate, 500)
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (shotcount <= 3) {
+        projectile2()
+        shotcount += 1
+    } else {
+        playerawesome.say("!", 200)
+        info.startCountdown(3)
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     game.over(false)
@@ -74,11 +82,16 @@ function projectile2 () {
 `, playerawesome, 0, -100)
 }
 info.onCountdownEnd(function () {
-    villain()
+    if (shotcount >= 3) {
+        shotcount = 0
+    }
 })
 let projectile: Sprite = null
+let shotcount = 0
 let playerawesome: Sprite = null
 let enemi: Sprite = null
-Player()
+Player2()
 villain()
-info.startCountdown(5)
+game.onUpdateInterval(5000, function () {
+    villain()
+})
